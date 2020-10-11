@@ -43,7 +43,7 @@ public class Config {
     // * Replace the localize option you want with this variable.
     // * - Use LOCALIZE_OPTION_SIMPLIFIED_CHINESE for China
     // * - Use LOCALIZE_OPTION_TRADITIONAL_CHINESE for Taiwan
-    private static int mLocalizeOption = APIConfiguration.LOCALIZE_OPTION_SIMPLIFIED_CHINESE;
+    private static int mLocalizeOption = APIConfiguration.LOCALIZE_OPTION_TRADITIONAL_CHINESE;
 //    private static int mLocalizeOption = APIConfiguration.LOCALIZE_OPTION_TRADITIONAL_CHINESE;
     public static void setLocalizeOption(int localizeOption) {
         mLocalizeOption = localizeOption;
