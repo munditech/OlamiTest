@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="tk.munditv.olamitest">
+    package="tk.munditv.olamitest3">
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:screenOrientation="portrait"
-            android:name=".MainActivity">
+            android:name="tk.munditv.olamitest3.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,15 +22,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SpeechInputActivity"
+            android:name="tk.munditv.olamitest3.SpeechInputActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".TextInputWordSegmentationActivity"
+            android:name="tk.munditv.olamitest3.TextInputWordSegmentationActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".TextInputNLIAnalysisActivity"
+            android:name="tk.munditv.olamitest3.TextInputNLIAnalysisActivity"
             android:screenOrientation="portrait">
         </activity>    </application>
 
