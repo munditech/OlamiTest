@@ -44,6 +44,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -56,6 +58,8 @@ import ai.olami.android.tts.TtsPlayer;
 import ai.olami.cloudService.APIConfiguration;
 import ai.olami.cloudService.APIResponse;
 import ai.olami.cloudService.SpeechResult;
+import ai.olami.cloudService.TextRecognizer;
+import ai.olami.util.GsonFactory;
 
 public class SpeechInputActivity extends AppCompatActivity {
 
@@ -64,7 +68,8 @@ public class SpeechInputActivity extends AppCompatActivity {
     private static final int REQUEST_EXTERNAL_PERMISSION = 1;
     private static final int REQUEST_MICROPHONE = 3;
 
-    RecorderSpeechRecognizer mRecognizer = null;
+    private RecorderSpeechRecognizer mRecognizer = null;
+    private TextRecognizer mtextRecognizer;
 
     private final int VOLUME_BAR_MAX_VALUE = 40;
     private final int VOLUME_BAR_MAX_ITEM = 20;
@@ -87,6 +92,7 @@ public class SpeechInputActivity extends AppCompatActivity {
 
     TtsPlayerListener mTtsPlayerListener = null;
     TtsPlayer mTtsPlayer = null;
+    private Gson mJsonDump;
 
     private float mSpeed = 1.0f;
 
@@ -94,7 +100,7 @@ public class SpeechInputActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech_input);
-
+        mJsonDump = GsonFactory.getDebugGson(false);
 
         Intent intent = getIntent();
         Config.setLocalizeOption(intent.getIntExtra("LOCALIZE_OPTION", Config.getLocalizeOption()));
@@ -253,6 +259,15 @@ public class SpeechInputActivity extends AppCompatActivity {
             } else {
                 autoStopSwitchChangeHandler(false);
             }
+
+            // * Step 2: Create the text recognizer.
+            mtextRecognizer = new TextRecognizer(config);
+            mtextRecognizer.setSdkType("android");
+
+            // * Optional steps: Setup some other configurations.
+            mtextRecognizer.setEndUserIdentifier("Someone");
+            mtextRecognizer.setTimeout(10000);
+
         }
     }
 
@@ -396,10 +411,12 @@ public class SpeechInputActivity extends AppCompatActivity {
                 cancelButtonChangeHandler(View.VISIBLE, "X");
                 voiceVolumeChangeHandler(0);
 
-                if (!asrFinal && !responswait) {
-                    String anserString = getString(R.string.pleaseWait);
-                    TTSPlayStart(anserString);
-                    responswait = true;
+                if (false) {
+                    if (!asrFinal && !responswait) {
+                        String anserString = getString(R.string.pleaseWait);
+                        TTSPlayStart(anserString);
+                        responswait = true;
+                    }
                 }
 
 
@@ -597,6 +614,15 @@ public class SpeechInputActivity extends AppCompatActivity {
         });
     }
 
+    private void textInputAPIResponseChangeHandler(final String APIResponseDump) {
+        new Handler(this.getMainLooper()).post(new Runnable(){
+            public void run(){
+                //textInputResponse.setText(getString(R.string.Response) +" : \n"+ APIResponseDump);
+                ParseAPIResponse(APIResponseDump);
+            }
+        });
+    }
+
     private void APIResponseChangeHandler(final String APIResponseStr) {
         new Handler(this.getMainLooper()).post(new Runnable(){
             public void run(){
@@ -717,7 +743,7 @@ public class SpeechInputActivity extends AppCompatActivity {
 
             // parsing asr json string to object
             JSONObject asrObject = new JSONObject(asrString);
-            String asrResult = asrObject.getString("result");
+            final String asrResult = asrObject.getString("result");
             String asrRequestId = asrObject.getString("requestId");
             String asrSpechStatus = asrObject.getString("speech_status");
             asrFinal = asrObject.getBoolean("final");
@@ -739,14 +765,55 @@ public class SpeechInputActivity extends AppCompatActivity {
 
                     int nliDescStatus = nliDescObject.getInt("status");
                     if (nliDescStatus == 0) {
-                        String nliDescUrlString = nliDescObject.getString("url");
+                        String nliTypeString = nliObject.getString("type");
+                        if (nliTypeString.equals("weather")) {
+                            String nliDescUrlString = nliDescObject.getString("url");
+                        }
                     } else if (nliDescStatus == 3001) {
                         nliDescResultString = "網路忙線中";
                     }
-                    String nliTypeString = nliObject.getString("type");
                     TTSPlayStart(nliDescResultString);
                     responswait = false;
                 }
+            } else {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            // * Send text to request NLI recognition.
+                            APIResponse response = mtextRecognizer.requestNLI(asrResult);
+                            //
+                            // You can also send text with NLIConfig to append "nli_config" JSON object.
+                            //
+                            // For Example,
+                            // try to replace 'requestNLI(inputText)' with the following sample code:
+                            // ===================================================================
+                            // NLIConfig nliConfig = new NLIConfig();
+                            // nliConfig.setSlotName("myslot");
+                            // APIResponse response = mRecognizer.requestNLI(textInputEdit.getText().toString(), nliConfig);
+                            // ===================================================================
+                            //
+
+                            // Check request status.
+                            if (response.ok() && response.hasData()) {
+                                // * Dump NLI results by JSON format.
+                                textInputAPIResponseChangeHandler(mJsonDump.toJson(response));
+                                // --------------------------------------------------
+                                // * You can also handle or process NLI/IDS results ...
+                                //
+                                //   For example:
+                                //   NLIResult[] nliResults = response.getData().getNLIResults();
+                                //
+                                // * See also :
+                                //   - OLAMI Java Client SDK & Examples
+                                //   - ai.olami.nli.NLIResult.
+                                // --------------------------------------------------
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
         } catch (Exception e) {
             e.printStackTrace();
