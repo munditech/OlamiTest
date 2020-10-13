@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: ./OlamiTest3/libs/olami-android-tts-1.1.0.120.aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2d17085b96b166dfe2c30e0d31a6b4e1/jetified-olami-android-tts-1.1.0.120/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2d17085b96b166dfe2c30e0d31a6b4e1/jetified-olami-android-tts-1.1.0.120/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2d17085b96b166dfe2c30e0d31a6b4e1/jetified-olami-android-tts-1.1.0.120/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

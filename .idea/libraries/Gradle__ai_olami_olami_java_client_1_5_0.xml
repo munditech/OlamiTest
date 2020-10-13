@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: ai.olami:olami-java-client:1.5.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ai.olami/olami-java-client/1.5.0/c4c2e76f362e39ed3fd444af1992ef36ec703c19/olami-java-client-1.5.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ai.olami/olami-java-client/1.5.0/ad237b89c78b7f6bcebf83018df0005c6dc2655f/olami-java-client-1.5.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ai.olami/olami-java-client/1.5.0/94d333c823e9482a60f7e40404586d1c76925dd/olami-java-client-1.5.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

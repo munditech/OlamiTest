@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">olami-android-tts-sdk</string>
+    <string name="typeInput">請輸入你想說的話</string>
+    <string name="speedText">播放速度：</string>
+    <string name="submit">送出</string>
+    <string name="helloText">你好，我是歐拉蜜</string>
+</resources>

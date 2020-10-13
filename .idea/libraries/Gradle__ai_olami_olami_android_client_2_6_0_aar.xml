@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: ai.olami:olami-android-client:2.6.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3a7dd1605543edced3e6b9921d82c592/jetified-olami-android-client-2.6.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3a7dd1605543edced3e6b9921d82c592/jetified-olami-android-client-2.6.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3a7dd1605543edced3e6b9921d82c592/jetified-olami-android-client-2.6.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ai.olami/olami-android-client/2.6.0/d032609845290c6d1de30e08ba4cdc6913e76796/olami-android-client-2.6.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ai.olami/olami-android-client/2.6.0/9a1ee016c869395f82bbdd80ebed7f2fc270747a/olami-android-client-2.6.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
